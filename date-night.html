@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>our virtual date night ♡</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@300;400&family=Inter:wght@300;400&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #ffeef8 0%, #fff4e6 50%, #f0f4ff 100%);
+            min-height: 100vh;
+            padding: 2rem 1rem;
+            color: #5a4a4a;
+        }
+        
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            border: 1px solid rgba(180, 160, 170, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .container:hover {
+            backdrop-filter: blur(15px);
+            background: rgba(255, 255, 255, 0.85);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px dashed #e8d5d5;
+        }
+        
+        h1 {
+            font-family: 'Crimson Pro', serif;
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #8b6f7d;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        
+        .subtitle {
+            font-size: 0.95rem;
+            color: #a89090;
+            font-weight: 300;
+            font-style: italic;
+        }
+        
+        .todo-list {
+            list-style: none;
+        }
+        
+        .todo-item {
+            margin-bottom: 2rem;
+            padding: 1.75rem;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 16px;
+            border-left: 3px solid #d4b5c8;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .todo-item:hover {
+            background: rgba(255, 255, 255, 0.85);
+            transform: translateX(4px);
+        }
+        
+        .todo-item.checked {
+            opacity: 0.6;
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        .todo-item.checked .todo-title {
+            text-decoration: line-through;
+            color: #b8a5a5;
+        }
+        
+        .checkbox-wrapper {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        
+        .custom-checkbox {
+            min-width: 24px;
+            width: 24px;
+            height: 24px;
+            border: 2px solid #d4b5c8;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2px;
+            transition: all 0.3s ease;
+        }
+        
+        .todo-item.checked .custom-checkbox {
+            background: #d4b5c8;
+            border-color: #d4b5c8;
+        }
+        
+        .checkmark {
+            display: none;
+            color: white;
+            font-size: 14px;
+        }
+        
+        .todo-item.checked .checkmark {
+            display: block;
+        }
+        
+        .todo-content {
+            flex: 1;
+        }
+        
+        .todo-title {
+            font-size: 1.1rem;
+            color: #6b5666;
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .todo-details {
+            color: #9d8b8b;
+            font-size: 0.9rem;
+            line-height: 1.7;
+            margin-top: 0.75rem;
+        }
+        
+        .todo-details ul {
+            list-style: none;
+            margin-top: 0.5rem;
+            padding-left: 0.5rem;
+        }
+        
+        .todo-details li {
+            padding: 0.3rem 0;
+        }
+        
+        .todo-details li:before {
+            content: "✦ ";
+            color: #d4b5c8;
+            margin-right: 0.5rem;
+        }
+        
+        .note {
+            font-style: italic;
+            color: #b5a0a0;
+            font-size: 0.85rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 2.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed #e8d5d5;
+            color: #b5a0a0;
+            font-size: 0.9rem;
+        }
+        
+        .heart {
+            display: inline-block;
+            color: #d4b5c8;
+            animation: heartbeat 2s ease-in-out infinite;
+        }
+        
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 2rem 1.5rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .todo-item {
+                padding: 1.25rem;
+            }
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .builder-view, .list-view {
+            animation: fadeIn 0.4s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .options-pool {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.4);
+            border-radius: 16px;
+            border: 1px dashed #d4b5c8;
+            min-height: 120px;
+        }
+        
+        .pool-title {
+            font-size: 0.85rem;
+            color: #a89090;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+        
+        .options-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+        
+        .option-card {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid #d4b5c8;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            cursor: move;
+            transition: all 0.2s ease;
+            font-size: 0.95rem;
+            color: #6b5666;
+        }
+        
+        .option-card:hover {
+            background: rgba(255, 255, 255, 0.95);
+            transform: translateY(-2px);
+        }
+        
+        .option-card.dragging {
+            opacity: 0.5;
+        }
+        
+        .drop-zone {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            border: 2px dashed #d4b5c8;
+            min-height: 200px;
+            transition: all 0.3s ease;
+        }
+        
+        .drop-zone.drag-over {
+            background: rgba(212, 181, 200, 0.1);
+            border-color: #c4a5b8;
+        }
+        
+        .drop-zone-title {
+            font-size: 0.85rem;
+            color: #a89090;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 400;
+        }
+        
+        .drop-zone-empty {
+            text-align: center;
+            color: #b5a0a0;
+            font-style: italic;
+            padding: 2rem 1rem;
+        }
+        
+        .dropped-items {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        
+        .dropped-item {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid #d4b5c8;
+            border-radius: 12px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: move;
+        }
+        
+        .dropped-item:hover {
+            background: rgba(255, 255, 255, 0.9);
+        }
+        
+        .remove-btn {
+            background: none;
+            border: none;
+            color: #c4a5b8;
+            cursor: pointer;
+            font-size: 1.2rem;
+            padding: 0;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: all 0.2s ease;
+        }
+        
+        .remove-btn:hover {
+            background: rgba(212, 181, 200, 0.2);
+            color: #a88599;
+        }
+        
+        .next-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem 2rem;
+            background: linear-gradient(135deg, #d4b5c8 0%, #c4a5b8 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        
+        .next-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(212, 181, 200, 0.4);
+        }
+        
+        .next-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .back-btn {
+            display: block;
+            width: 100%;
+            padding: 0.875rem 2rem;
+            background: rgba(255, 255, 255, 0.6);
+            color: #8b6f7d;
+            border: 1px solid rgba(180, 160, 170, 0.4);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1.5rem;
+        }
+        
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.8);
+            border-color: #c4a5b8;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>our virtual date night</h1>
+            <p class="subtitle">soft plans, good vibes, just us</p>
+        </header>
+        
+        <!-- Builder View -->
+        <div class="builder-view" id="builderView">
+            <div class="options-pool">
+                <div class="pool-title">Drag to add to your date night</div>
+                <div class="options-grid" id="optionsGrid">
+                    <div class="option-card" draggable="true" data-id="section04">
+                        Section 04 — adventure questions
+                    </div>
+                    <div class="option-card" draggable="true" data-id="games">
+                        Game time!
+                    </div>
+                    <div class="option-card" draggable="true" data-id="premiere">
+                        Creative hour: Premiere Pro
+                    </div>
+                    <div class="option-card" draggable="true" data-id="watch">
+                        Watch something together
+                    </div>
+                </div>
+            </div>
+            
+            <div class="drop-zone" id="dropZone">
+                <div class="drop-zone-title">Your date night list</div>
+                <div class="drop-zone-empty" id="emptyMessage">
+                    Drag activities here to build your perfect evening
+                </div>
+                <div class="dropped-items" id="droppedItems"></div>
+            </div>
+            
+            <button class="next-btn" id="nextBtn" disabled>Create our date night →</button>
+        </div>
+        
+        <!-- List View -->
+        <div class="list-view hidden" id="listView">
+            <ul class="todo-list" id="todoList">
+            </ul>
+            
+            <footer>
+                made for us <span class="heart">♡</span> take your time, enjoy the moments
+            </footer>
+            
+            <button class="back-btn" id="backBtn">← back to edit</button>
+        </div>
+    </div>
+    
+    <script>
+        const activities = {
+            section04: {
+                title: 'Section 04 — adventure questions',
+                details: 'Read together, talk it through, then write what feels right. <span class="note">No pressure to make it perfect.</span>'
+            },
+            games: {
+                title: 'Game time!',
+                details: `Let's play whatever sounds fun:
+                    <ul>
+                        <li>One-word story</li>
+                        <li>Actor → movie → actor</li>
+                        <li>Explain it badly</li>
+                        <li>Say the same thing</li>
+                    </ul>`
+            },
+            premiere: {
+                title: 'Creative hour: Premiere Pro',
+                details: 'I\'ll show you whatever you want to learn. <span class="note">We\'ll go at your pace, explore what\'s interesting to you.</span>'
+            },
+            watch: {
+                title: 'Watch something together',
+                details: `We'll decide in the moment:
+                    <ul>
+                        <li>Guess-the-movie <span class="note">(Nation wants this!)</span></li>
+                        <li>Jatt & Juliet</li>
+                        <li>Sapne vs Everyone</li>
+                    </ul>`
+            }
+        };
+
+        let selectedActivities = [];
+        let draggedElement = null;
+
+        // Drag and drop functionality
+        const optionCards = document.querySelectorAll('.option-card');
+        const dropZone = document.getElementById('dropZone');
+        const droppedItems = document.getElementById('droppedItems');
+        const emptyMessage = document.getElementById('emptyMessage');
+        const nextBtn = document.getElementById('nextBtn');
+
+        optionCards.forEach(card => {
+            card.addEventListener('dragstart', handleDragStart);
+            card.addEventListener('dragend', handleDragEnd);
+        });
+
+        dropZone.addEventListener('dragover', handleDragOver);
+        dropZone.addEventListener('drop', handleDrop);
+        dropZone.addEventListener('dragleave', handleDragLeave);
+
+        function handleDragStart(e) {
+            draggedElement = e.target;
+            e.target.classList.add('dragging');
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', e.target.innerHTML);
+        }
+
+        function handleDragEnd(e) {
+            e.target.classList.remove('dragging');
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault();
+            }
+            e.dataTransfer.dropEffect = 'move';
+            dropZone.classList.add('drag-over');
+            return false;
+        }
+
+        function handleDragLeave(e) {
+            if (e.target === dropZone) {
+                dropZone.classList.remove('drag-over');
+            }
+        }
+
+        function handleDrop(e) {
+            if (e.stopPropagation) {
+                e.stopPropagation();
+            }
+            dropZone.classList.remove('drag-over');
+
+            const activityId = draggedElement.dataset.id;
+            
+            if (!selectedActivities.includes(activityId)) {
+                selectedActivities.push(activityId);
+                addDroppedItem(activityId, draggedElement.textContent.trim());
+                draggedElement.style.opacity = '0.3';
+                draggedElement.style.pointerEvents = 'none';
+            }
+
+            return false;
+        }
+
+        function addDroppedItem(id, title) {
+            emptyMessage.style.display = 'none';
+            
+            const item = document.createElement('div');
+            item.className = 'dropped-item';
+            item.dataset.id = id;
+            item.innerHTML = `
+                <span>${title}</span>
+                <button class="remove-btn" onclick="removeItem('${id}')">×</button>
+            `;
+            
+            droppedItems.appendChild(item);
+            updateNextButton();
+        }
+
+        function removeItem(id) {
+            selectedActivities = selectedActivities.filter(actId => actId !== id);
+            
+            const droppedItem = droppedItems.querySelector(`[data-id="${id}"]`);
+            if (droppedItem) {
+                droppedItem.remove();
+            }
+
+            const optionCard = document.querySelector(`.option-card[data-id="${id}"]`);
+            if (optionCard) {
+                optionCard.style.opacity = '1';
+                optionCard.style.pointerEvents = 'auto';
+            }
+
+            if (selectedActivities.length === 0) {
+                emptyMessage.style.display = 'block';
+            }
+
+            updateNextButton();
+        }
+
+        function updateNextButton() {
+            nextBtn.disabled = selectedActivities.length === 0;
+        }
+
+        nextBtn.addEventListener('click', () => {
+            createDateNightList();
+        });
+        
+        const backBtn = document.getElementById('backBtn');
+        backBtn.addEventListener('click', () => {
+            const builderView = document.getElementById('builderView');
+            const listView = document.getElementById('listView');
+            
+            listView.classList.add('hidden');
+            builderView.classList.remove('hidden');
+        });
+
+        function createDateNightList() {
+            const builderView = document.getElementById('builderView');
+            const listView = document.getElementById('listView');
+            const todoList = document.getElementById('todoList');
+
+            todoList.innerHTML = '';
+
+            selectedActivities.forEach(activityId => {
+                const activity = activities[activityId];
+                const li = document.createElement('li');
+                li.className = 'todo-item';
+                li.onclick = function() { toggleCheck(this); };
+                
+                li.innerHTML = `
+                    <div class="checkbox-wrapper">
+                        <div class="custom-checkbox">
+                            <span class="checkmark">✓</span>
+                        </div>
+                        <div class="todo-content">
+                            <div class="todo-title">${activity.title}</div>
+                            <div class="todo-details">${activity.details}</div>
+                        </div>
+                    </div>
+                `;
+                
+                todoList.appendChild(li);
+            });
+
+            builderView.classList.add('hidden');
+            listView.classList.remove('hidden');
+        }
+
+        function toggleCheck(item) {
+            item.classList.toggle('checked');
+        }
+    </script>
+</body>
+</html>
